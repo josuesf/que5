@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {Input, Button, Logo, Heading, BackgroundWrapper, AlertStatus} from '../components';
 import { NavigationActions } from 'react-navigation'
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {getPlatformValue} from '../utils';
 
 export default class Register extends Component {
@@ -96,7 +96,7 @@ export default class Register extends Component {
                 style={{
                     padding: 0, marginTop: 10,
                 }}> 
-                <Icon name={"ios-camera"} size={100} color={"#ffffff"} style={{ marginRight: 15 }} />
+                <Icon name={"camera"} size={100} color={"#ffffff"} style={{ marginRight: 15 }} />
                 </TouchableOpacity>
             </View>
 
