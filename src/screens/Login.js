@@ -198,11 +198,6 @@ export default class Login extends Component {
                 <Animated.View style={{position: 'relative', top: this.state.logoPositionTop}}>
                     <Logo/>
                 </Animated.View>
-                <Animated.View style={{position: 'relative', left: this.state.groupHeadingPositionLeft}}>
-                    <Heading element="h5" color="#ffffff" textAlign="center">
-                        {'Contesta preguntas y descubre que tanto conoces a tus amigos'}
-                    </Heading>
-                </Animated.View>
                 <Animated.View style={{position: 'relative', left: this.state.buttonPositionLeft}}>
                     <TouchableOpacity activeOpacity={0.8}
                         disabled={this.state.cargando}
@@ -211,7 +206,6 @@ export default class Login extends Component {
                                 width: 5,
                                 height: 5,
                             },
-                            marginTop:70,
                             shadowColor: 'black',
                             shadowOpacity: 0.4,elevation: 5,
                             borderWidth: 1, borderRadius: 2, borderColor: '#4090db', backgroundColor: '#4090db',

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, Alert
+    View, Text, Image, StyleSheet, Animated, InteractionManager, Alert,TouchableOpacity
 } from 'react-native';
 import {Input, Button, Logo, Heading, BackgroundWrapper, AlertStatus} from '../components';
 import { NavigationActions } from 'react-navigation'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {getPlatformValue} from '../utils';
 
 export default class Register extends Component {
@@ -89,9 +89,18 @@ export default class Register extends Component {
 
     render() {
         return <BackgroundWrapper transparent iconLeft="arrow-left-circle" onPressIcon={this.handleBack.bind(this)}>
-            <View style={loginStyle.loginContainer}>
-                <Logo/>
-                <View style={loginStyle.formContainer}>
+            <View style={registerStyle.loginContainer}>
+               
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableOpacity activeOpacity={0.8}
+                style={{
+                    padding: 0, marginTop: 10,
+                }}> 
+                <Icon name={"ios-camera"} size={100} color={"#ffffff"} style={{ marginRight: 15 }} />
+                </TouchableOpacity>
+            </View>
+
+                <View style={registerStyle.formContainer}>
                     <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
                         <Input label="Usuario"
                                icon={<Icon name="user"/>}
@@ -126,7 +135,7 @@ export default class Register extends Component {
     }
 }
 
-const loginStyle = StyleSheet.create({
+const registerStyle = StyleSheet.create({
     loginContainer: {
         flex: 1,
         backgroundColor: '#7e5682'
@@ -136,5 +145,10 @@ const loginStyle = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15
         //backgroundColor: '#ffffff'
+    },
+    avatar: {
+        borderRadius: 10,
+        width: 100,
+        height: 100
     }
 })
