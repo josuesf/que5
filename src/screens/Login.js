@@ -1,15 +1,27 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, StatusBar, TouchableOpacity, Dimensions
+    View, 
+    Text, 
+    Image, 
+    StyleSheet, 
+    Animated, 
+    InteractionManager, 
+    StatusBar, 
+    TouchableOpacity, 
+    Dimensions,
+    Alert,
+    Keyboard,
+    ScrollView
 } from 'react-native';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import {URL_WS} from '../utils/constantes';
 import {NavigationActions, createStackNavigator} from 'react-navigation';
 import {
-    Button, 
+    Input, 
     Logo, 
     Heading, 
-    BackgroundWrapper, 
     AlertStatus} from '../components';
 
 import FBSDK, {
@@ -27,15 +39,84 @@ export default class Login extends Component {
         header: null,
     };
     state = {
+        username: '', 
+        password: '',
         logoPositionTop: new Animated.Value(-228),
         groupHeadingPositionLeft: new Animated.Value(-614),
         buttonPositionLeft: new Animated.Value(-696),
         statusPositionTop: new Animated.Value(1200),
-        cargando:false
+        formPositionLeft: new Animated.Value(614),
+        buttonPositionTop: new Animated.Value(1354),
+        headerPositionTop: new Animated.Value(-148),
+        cargando:false,
     };
 
+    animateHome(){
+        const timingToZero = (stateValue) => Animated.timing(
+            stateValue,
+            {
+                toValue: 0,
+                duration: 700
+            }
+        )
+        Animated.sequence([
+            Animated.delay(20),
+            Animated.parallel([
+                timingToZero(this.state.logoPositionTop),
+                timingToZero(this.state.groupHeadingPositionLeft),
+                timingToZero(this.state.buttonPositionLeft),
+                Animated.timing(this.state.statusPositionTop, {
+                    toValue: 0,
+                    duration: 700
+                })
+            ])
+        ]).start()
+    }
+
+    componentDidMount() {
+        Animated.timing(this.state.headerPositionTop, {
+            toValue: 0,
+            duration: 725,
+            delay: 100
+        }).start();
+        Animated.timing(this.state.formPositionLeft, {
+            toValue: 0,
+            duration: 700,
+            delay: 120
+        }).start();
+        Animated.timing(this.state.buttonPositionTop, {
+            toValue: 0,
+            duration: 600,
+            delay: 130
+        }).start();
+    }
+
+    componentDidMount(){
+        if(this.props.disableInteractionCheck) {
+            this.animateHome();
+        }
+        else {
+            InteractionManager.runAfterInteractions(() => {
+                this.animateHome();
+            })
+        }
+    }
+
+    
+    handleChangeInput(stateName, text) {
+        this.setState({
+            [stateName]: text
+        })
+    }
+
+    handlePressSignUp() { 
+        this.props.navigation.navigate('register')
+    }
+
     loginFB = () => {
-        this.setState({ progressVisible: true, progressVisible: true })
+        
+        this.setState({ progressVisible: true})
+        LoginManager.logOut()
         LoginManager.logInWithReadPermissions(['public_profile', 'email']).then((result) => {
             if (result.isCancelled) {
                 console.log('loging cancelled')
@@ -148,85 +229,112 @@ export default class Login extends Component {
         })
     }
 
-    handePressSignIn() {
-    }
-
-    handlePressSignUp() { 
-        this.props.navigation.navigate('register')
-    }
-
-    animateHome(){
-        const timingToZero = (stateValue) => Animated.timing(
-            stateValue,
-            {
-                toValue: 0,
-                duration: 700
-            }
-        )
-        Animated.sequence([
-            Animated.delay(20),
-            Animated.parallel([
-                timingToZero(this.state.logoPositionTop),
-                timingToZero(this.state.groupHeadingPositionLeft),
-                timingToZero(this.state.buttonPositionLeft),
-                Animated.timing(this.state.statusPositionTop, {
-                    toValue: 0,
-                    duration: 700
-                })
-            ])
-        ]).start()
-    }
-
-    componentDidMount(){
-        if(this.props.disableInteractionCheck) {
-            this.animateHome();
-        }
-        else {
-            InteractionManager.runAfterInteractions(() => {
-                this.animateHome();
+    login=() => {
+        Keyboard.dismiss()
+        const parametros = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                usuario: (this.state.username).toLocaleLowerCase().trim(),
+                password: this.state.password
             })
         }
+        fetch(URL_WS + '/ws/login_user', parametros)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if(responseJson.respuesta=='ok'){
+
+                }else{
+
+                }
+            })
     }
 
+    
+
     render() {
-        return <BackgroundWrapper transparent>
-            <View style={loginStyle.loginContainer}>
-                <StatusBar
-                    backgroundColor="#422A44"
-                    barStyle="light-content"
-                />
-                <Animated.View style={{position: 'relative', top: this.state.logoPositionTop}}>
-                    <Logo/>
+        return <View style={loginStyle.container}>
+                <ScrollView style={loginStyle.loginContainer} keyboardShouldPersistTaps='handled'>
+                    <View style={loginStyle.loginContainer}>
+                        <StatusBar
+                            backgroundColor="#422A44"
+                            barStyle="light-content"
+                        />
+                        <Animated.View style={{position: 'relative', top: this.state.logoPositionTop}}>
+                            <Logo/>
+                        </Animated.View> 
+
+                        <Animated.View style={{position: 'relative', marginBottom:20, paddingLeft: 15, paddingRight: 15, left: this.state.buttonPositionLeft}}>
+                                <Input label="Usuario"
+                                    icon={<Icon name="face"/>} 
+                                    value={this.state.username}
+                                    marginBottom={23}
+                                    onChange={this.handleChangeInput.bind(this, 'username')}
+                                />
+                                <Input label="Contraseña"
+                                    icon={<Icon name="key"/>}
+                                    marginTop={23}
+                                    value={this.state.password} 
+                                    onChange={this.handleChangeInput.bind(this, 'password')}
+                                    secureTextEntry
+                                />
+                        </Animated.View>
+
+                        <Animated.View style={{position: 'relative', left: this.state.buttonPositionLeft}}>
+                            <TouchableOpacity activeOpacity={0.8}
+                                    disabled={this.state.cargando}
+                                    style={{
+                                        shadowOffset: {
+                                            width: 5,
+                                            height: 5,
+                                        },
+                                        shadowColor: 'black',
+                                        shadowOpacity: 0.4,elevation: 5,
+                                        borderWidth: 1, borderRadius: 2, borderColor: '#6c56b7', backgroundColor: '#6c56b7',
+                                        padding: 15, alignItems: 'center', marginBottom: 10, flexDirection: 'row',
+                                        marginLeft:10,marginRight:10,
+                                        alignItems: 'center', justifyContent: 'center'
+                                    }}
+                                    onPress={() => this.login()}>
+                                    <Icon name='account-check' color='white' size={20} />
+                                    <Text style={{ color: '#fff', fontWeight: 'bold', marginLeft: 10 }}>Iniciar sesion</Text>
+                            </TouchableOpacity> 
+                        </Animated.View>
+                    
+
+                        <Animated.View style={{position: 'relative', left: this.state.buttonPositionLeft}}>
+                            <TouchableOpacity activeOpacity={0.8}
+                                disabled={this.state.cargando}
+                                style={{
+                                    shadowOffset: {
+                                        width: 5,
+                                        height: 5,
+                                    },
+                                    shadowColor: 'black',
+                                    shadowOpacity: 0.4,elevation: 5,
+                                    borderWidth: 1, borderRadius: 2, borderColor: '#4090db', backgroundColor: '#4090db',
+                                    padding: 15, alignItems: 'center', marginBottom: 10, flexDirection: 'row',
+                                    marginLeft:10,marginRight:10,
+                                    alignItems: 'center', justifyContent: 'center'
+                                }}
+                                onPress={() => this.loginFB()}>
+                                <Icon name='facebook-box' color='white' size={20} />
+                                <Text style={{ color: '#fff', fontWeight: 'bold', marginLeft: 10 }}>Iniciar sesion con Facebook</Text>
+                            </TouchableOpacity> 
+                        </Animated.View>
+        
+                    </View>
+                </ScrollView>
+                <Animated.View style={{position: 'relative', top: this.state.statusPositionTop}}>
+                        <AlertStatus
+                            textHelper="No tienes una cuenta aún" textAction="Registrarse"
+                            onPressAction={this.handlePressSignUp.bind(this)}
+                        />
                 </Animated.View>
-                <Animated.View style={{position: 'relative', left: this.state.buttonPositionLeft}}>
-                    <TouchableOpacity activeOpacity={0.8}
-                        disabled={this.state.cargando}
-                        style={{
-                            shadowOffset: {
-                                width: 5,
-                                height: 5,
-                            },
-                            shadowColor: 'black',
-                            shadowOpacity: 0.4,elevation: 5,
-                            borderWidth: 1, borderRadius: 2, borderColor: '#4090db', backgroundColor: '#4090db',
-                            padding: 15, alignItems: 'center', marginBottom: 10, flexDirection: 'row',
-                            marginLeft:10,marginRight:10,
-                            alignItems: 'center', justifyContent: 'center'
-                        }}
-                        onPress={() => this.loginFB()}>
-                        <Icon name='facebook-box' color='white' size={20} />
-                        <Text style={{ color: '#fff', fontWeight: 'bold', marginLeft: 10 }}>Iniciar sesion con Facebook</Text>
-                    </TouchableOpacity> 
-                </Animated.View>
- 
             </View>
-            <Animated.View style={{position: 'relative', top: this.state.statusPositionTop}}>
-                <AlertStatus
-                    textHelper="No tienes una cuenta aún" textAction="Registrarse"
-                    onPressAction={this.handlePressSignUp.bind(this)}
-                />
-            </Animated.View>
-        </BackgroundWrapper>
     }
 }
 
@@ -235,10 +343,13 @@ Login.propTypes = {
 }
 
 const loginStyle = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#7e5682'
+    },
     loginContainer: {
         flex: 1,
-        backgroundColor: '#7e5682',
-        paddingTop: 69,
+        paddingTop: 30,
     },
     formContainer: {
         flex: 1,

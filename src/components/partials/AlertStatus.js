@@ -5,10 +5,10 @@ import {TextFont} from '../text';
 
 export default class AlertStatus extends Component {
     render() {
-        return <View style={style.container}>
-            <TextFont fontSize={16} color="#ffffff">
+        return <View style={style.container} >
+            <TextFont fontSize={16} color="#ffffff" onPress={this.props.onPressAction}>
                 <TextFont>{this.props.textHelper}{', '}</TextFont>
-                <TextFont fontWeight="700" onPress={this.props.onPressAction}>{this.props.textAction}</TextFont>
+                <TextFont fontWeight="700">{this.props.textAction}</TextFont>
             </TextFont>
         </View>
     }

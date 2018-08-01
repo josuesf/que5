@@ -1,15 +1,15 @@
-import Form, {Input, Button} from './form';
-import Partials, {AlertStatus, BackgroundWrapper, Logo} from './partials';
+import Form, {Input} from './form';
+import Partials, {AlertStatus, Logo} from './partials';
 import Text, {TextFont, Heading} from './text';
 
 export {
-    Form, Input, Button,
-    Partials, AlertStatus, BackgroundWrapper, Logo,
+    Form, Input,
+    Partials, AlertStatus, Logo,
     Text, TextFont, Heading
 }
 
 export default {
-    Form, Input, Button,
-    Partials, AlertStatus, BackgroundWrapper, Logo,
+    Form, Input,
+    Partials, AlertStatus, Logo,
     Text, TextFont, Heading
 }
