@@ -26,7 +26,7 @@ const App = StackNavigator(
     //Aqui ingresas tus screens
   },
   {
-    initialRouteName: 'home',
+    initialRouteName: 'login',
     //headerMode: 'none',
     /*
    * Use modal on iOS because the card mode comes from the right,
