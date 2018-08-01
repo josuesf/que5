@@ -32,32 +32,32 @@ export default class PreguntasCon extends Component {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    backgroundColor="#422A44"
+                    backgroundColor="#008577"
                     barStyle="light-content"
                 />
                 <View style={{
-                    flexDirection: 'row', alignItems: 'center', backgroundColor: '#7E5682',
+                    flexDirection: 'row', alignItems: 'center', backgroundColor: '#00A896',
                     paddingHorizontal: 16, paddingTop: 10, paddingBottom: 10
                 }}>
                     <TouchableOpacity onPress={() => goBack()} style={{ alignItems: 'center', marginRight: 20 }}>
-                        <IconMaterial name="arrow-left" size={35} color="#E1DADF" />
+                        <IconMaterial name="arrow-left" size={35} color="#F0F3BD" />
                     </TouchableOpacity>
-                    <Text style={{ color: '#E1DADF', fontSize: 16, fontWeight: 'bold' }}>Preguntas con @josuesf</Text>
+                    <Text style={{ color: '#F0F3BD', fontSize: 16, fontWeight: 'bold' }}>Preguntas con @josuesf</Text>
                 </View>
-                <View style={{ backgroundColor: '#E1DADF', paddingHorizontal: 16, paddingVertical: 10 }}>
-                    <Text style={{ color: '#7E5682', fontSize: 16,fontWeight:'bold' }}>Cual es tu color favorito?</Text>
+                <View style={{ backgroundColor: '#F8F9DD', paddingHorizontal: 16, paddingVertical: 10 }}>
+                    <Text style={{ color: '#00A896', fontSize: 16,fontWeight:'bold' }}>Cual es tu color favorito?</Text>
                     <Text style={{ color: '#A4A4A4', fontSize: 11 }}>Hace 4 minutos</Text>
-                    <TouchableOpacity onPress={()=>navigate('pregunta')} style={{ marginTop: 10, backgroundColor: '#7BCB9B', marginVertical: 10, borderRadius: 5 }}>
+                    <TouchableOpacity onPress={()=>navigate('pregunta')} style={{ marginTop: 10, backgroundColor: '#02C39A', marginVertical: 10, borderRadius: 5 }}>
                         <Text style={{ color: '#FFFFFF', fontSize: 14, padding: 5, fontWeight: 'bold' }}>Responder</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={()=>navigate('pregunta')} activeOpacity={0.7} style={{backgroundColor:'#7E5682',marginHorizontal:16,
+                {/* <TouchableOpacity onPress={()=>navigate('pregunta')} activeOpacity={0.7} style={{backgroundColor:'#02C39A',marginHorizontal:16,
                     borderRadius:5,flexDirection:'row',marginVertical:10,alignItems:'center'}}>
-                    <Text style={{ color: '#E1DADF', fontSize: 14,padding:10, fontWeight: 'bold',flex:1 }}>Seguir Preguntando ...</Text>
-                    <IconMaterial name="chevron-right" size={35} color="#E1DADF" />
-                </TouchableOpacity> 
+                    <Text style={{ color: '#F0F3BD', fontSize: 14,padding:10, fontWeight: 'bold',flex:1 }}>Seguir Preguntando ...</Text>
+                    <IconMaterial name="chevron-right" size={35} color="#F0F3BD" />
+                </TouchableOpacity>  */}
                 <View style={[styles.contenido,{marginTop:10}]}>
-                    <Text style={{ color: '#7E5682', fontSize: 14,fontWeight:'bold' }}>Preguntas Anteriores</Text>
+                    <Text style={{ color: '#05668D', fontSize: 14,fontWeight:'bold' }}>Preguntas Anteriores</Text>
                     <View style={{marginVertical:10}}>
                         <Text style={{ color: '#9B9B9B', fontSize: 16,fontWeight:'bold' }}>Cual es tu color favorito?</Text>
                         <Text style={{ color: '#9B9B9B', fontSize: 12 }}>Juan : Azul</Text>
