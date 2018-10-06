@@ -44,18 +44,18 @@ export default class PreguntasCon extends Component {
                     </TouchableOpacity>
                     <Text style={{ color: '#F0F3BD', fontSize: 16, fontWeight: 'bold' }}>Preguntas con @josuesf</Text>
                 </View>
-                <View style={{ backgroundColor: '#F8F9DD', paddingHorizontal: 16, paddingVertical: 10 }}>
+                {/* <View style={{ backgroundColor: '#F8F9DD', paddingHorizontal: 16, paddingVertical: 10 }}>
                     <Text style={{ color: '#00A896', fontSize: 16,fontWeight:'bold' }}>Cual es tu color favorito?</Text>
                     <Text style={{ color: '#A4A4A4', fontSize: 11 }}>Hace 4 minutos</Text>
                     <TouchableOpacity onPress={()=>navigate('pregunta')} style={{ marginTop: 10, backgroundColor: '#02C39A', marginVertical: 10, borderRadius: 5 }}>
                         <Text style={{ color: '#FFFFFF', fontSize: 14, padding: 5, fontWeight: 'bold' }}>Responder</Text>
                     </TouchableOpacity>
-                </View>
-                {/* <TouchableOpacity onPress={()=>navigate('pregunta')} activeOpacity={0.7} style={{backgroundColor:'#02C39A',marginHorizontal:16,
+                </View> */}
+                <TouchableOpacity onPress={()=>navigate('pregunta')} activeOpacity={0.7} style={{backgroundColor:'#02C39A',marginHorizontal:16,
                     borderRadius:5,flexDirection:'row',marginVertical:10,alignItems:'center'}}>
                     <Text style={{ color: '#F0F3BD', fontSize: 14,padding:10, fontWeight: 'bold',flex:1 }}>Seguir Preguntando ...</Text>
                     <IconMaterial name="chevron-right" size={35} color="#F0F3BD" />
-                </TouchableOpacity>  */}
+                </TouchableOpacity> 
                 <View style={[styles.contenido,{marginTop:10}]}>
                     <Text style={{ color: '#05668D', fontSize: 14,fontWeight:'bold' }}>Preguntas Anteriores</Text>
                     <View style={{marginVertical:10}}>

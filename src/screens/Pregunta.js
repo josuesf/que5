@@ -15,6 +15,7 @@ import {
     ScrollView,
 } from 'react-native';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
+import { fetchData } from '../utils/fetchData';
 export default class Pregunta extends Component {
     static navigationOptions = {
         header: null,
@@ -25,11 +26,28 @@ export default class Pregunta extends Component {
             'Setting a timer'
         ];
         this.state = {
+            pregunta:"",
+            alternativas:[]
         }
     }
-
+    componentWillMount(){
+        console.log('Entro aqui')
+        this.GenerarPregunta()
+    }
+    GenerarPregunta=()=>{
+        fetchData('/ws/question_random','POST',{},(res,err)=>{
+            if(!err){
+                var pregunta = res[0]
+                this.setState({
+                    pregunta:pregunta.preguntaDescripcion,
+                    alternativas:pregunta.alternativas
+                })
+            }
+        })
+    }
     render() {
         const { navigate, goBack } = this.props.navigation;
+        const {pregunta,alternativas} = this.state
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -46,16 +64,14 @@ export default class Pregunta extends Component {
                     <Text style={{ color: '#00A896', fontSize: 16, fontWeight: 'bold' }}>Nueva Pregunta</Text>
                 </View>
                 <View style={{ alignContent: 'center', alignItems: 'center', padding: 20,marginTop:30 }}>
-                    <Text style={{ color: '#00A896', fontSize: 35, alignSelf: 'center', fontWeight: 'bold' }}>Cual es tu color favorito?</Text>
+                    <Text style={{ color: '#00A896', fontSize: 35, alignSelf: 'center', fontWeight: 'bold' }}>{pregunta}?</Text>
                 </View>
                 <ScrollView>
-
-                    <TouchableOpacity style={{ backgroundColor: '#F0F3BD', marginHorizontal: 16, borderRadius: 5, marginVertical: 10 }}>
-                        <Text style={{ color: '#008577', fontSize: 14, fontWeight: 'bold', padding: 10 }}>Azul</Text>
+                    {alternativas.map(a=>
+                    <TouchableOpacity key={a.pk} onPress={()=>navigate('amigos')} style={{ backgroundColor: '#F0F3BD', marginHorizontal: 16, borderRadius: 5, marginVertical: 10 }}>
+                        <Text style={{ color: '#008577', fontSize: 14, fontWeight: 'bold', padding: 10 }}>{a.alternativaDescripcion}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ backgroundColor: '#F0F3BD', marginHorizontal: 16, borderRadius: 5, marginVertical: 10 }}>
-                        <Text style={{ color: '#008577', fontSize: 14, fontWeight: 'bold', padding: 10 }}>Morado</Text>
-                    </TouchableOpacity>
+                    )}
                 </ScrollView>
 
             </View>

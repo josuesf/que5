@@ -3,7 +3,9 @@ package com.que5;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.google.firebase.FirebaseApp;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -34,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativePushNotificationPackage(),
           new FBSDKPackage(mCallbackManager),
           new VectorIconsPackage()
       );
@@ -55,5 +58,10 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     AppEventsLogger.activateApp(this);
+    try {
+      FirebaseApp.initializeApp(this);
+    }
+    catch (Exception e) {
+    }
   }
 }

@@ -5,6 +5,8 @@ import Login from './src/screens/Login'
 import Register from './src/screens/Register'
 import PreguntasCon from './src/screens/PreguntasCon';
 import Pregunta from './src/screens/Pregunta';
+import Amigos from './src/screens/Amigos';
+import AppNotifications from './src/screens/AppNotifications';
 
 const App = StackNavigator(
   {
@@ -22,11 +24,17 @@ const App = StackNavigator(
     },
     pregunta:{
       screen:Pregunta
+    },
+    amigos:{
+      screen:Amigos
+    },
+    notifications:{
+      screen:AppNotifications
     }
     //Aqui ingresas tus screens
   },
   {
-    initialRouteName: 'login',
+    initialRouteName: 'notifications',
     //headerMode: 'none',
     /*
    * Use modal on iOS because the card mode comes from the right,
